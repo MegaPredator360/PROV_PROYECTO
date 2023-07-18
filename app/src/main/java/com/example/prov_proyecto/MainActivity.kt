@@ -20,6 +20,10 @@ class MainActivity : AppCompatActivity() {
 
         Pantalla info de recetas
          */
+
+        /* PRUEBA 2
+        * */
+
         // Prueba 2
     }
 }
