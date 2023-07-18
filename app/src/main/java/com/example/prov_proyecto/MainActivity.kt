@@ -7,7 +7,19 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //Hola AARON
+        /*
+        Aplicación de recetas
+        - Que muestre una coleccion de recetas
+        - Ordenar las recetas por categoria
+        - Poder guardar las recetas en una lista de favoritos
+        - Mostrar procedimientos de recetas con algunas imagenes
+
+        Primer pantalla
+        Muestra la lista de recetas
+        Filtrar recetas por categorias como lista desplegable
+
+        Pantalla info de recetas
+         */
 
     }
 }
