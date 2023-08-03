@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Permisos que usa la applicación -->
+    <uses-permission android:name="android.permission.INTERNET" />                  <!-- Conexion a internet -->
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PROV_PROYECTO"
         tools:targetApi="31">
+        <activity
+            android:name=".InfoRecetaActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
