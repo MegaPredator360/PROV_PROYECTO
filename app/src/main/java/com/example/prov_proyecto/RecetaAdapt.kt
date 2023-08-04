@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 class RecetaAdapt(
     private val context: Activity, private val list: List<ListaRecetas>): ArrayAdapter<ListaRecetas>(context, R.layout.list_item, list) {
@@ -19,9 +21,16 @@ class RecetaAdapt(
         val nombreReceta: TextView = view.findViewById(R.id.lblRecetaNombre)
         val categoriaReceta: TextView = view.findViewById(R.id.lblCategoriaReceta)
 
-        //imageView.setImageResource(list[position].)
+        // Recibimos el link de la imagen
+        val urlImagen = list[position].Imagenes[0]
+
         nombreReceta.setText(list[position].Nombre)
         categoriaReceta.setText("Categoria: " + list[position].Categoria)
+
+        Glide.with(context)
+            .load(urlImagen)
+            .diskCacheStrategy(DiskCacheStrategy.ALL) // Cache the image
+            .into(imageView)
 
         return view
     }

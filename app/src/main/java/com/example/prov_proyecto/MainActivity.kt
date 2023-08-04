@@ -72,15 +72,24 @@ class MainActivity : AppCompatActivity() {
                 response: Response<RecetasResponse>
             ) {
                 if (response.isSuccessful) {
-                    response.body()?.let {
+                    response.body()?.let {recetasResponse ->
                         // Se crea un adaptador para las lista de recetas y mostrarlas en el ListView
-                        val adaptadorListaRecetas = RecetaAdapt(this@MainActivity, it.ListaRecetas)
+                        val adaptadorListaRecetas = RecetaAdapt(this@MainActivity, recetasResponse.ListaRecetas)
 
-                        // Se llaman a los TextViews y se le asignan los datos que recibimos del API
+                        // Se llama al ListView y se le asignan los datos que recibimos del API
+                        binding.lstRecetas.isClickable = true
                         binding.lstRecetas.adapter = adaptadorListaRecetas
-                        binding.lstRecetas.setOnClickListener {
+                        binding.lstRecetas.setOnItemClickListener { parent, view, position, id ->
                             val infoRecetaIntent = Intent(this@MainActivity, InfoRecetaActivity::class.java)
 
+                            // Obtenemos la posicion de la receta en la lista
+                            val posicionReceta = recetasResponse.ListaRecetas[position]
+
+                            infoRecetaIntent.putExtra("nombreReceta", posicionReceta.Nombre)
+                            infoRecetaIntent.putExtra("categoriaReceta", posicionReceta.Categoria)
+                            infoRecetaIntent.putExtra("ingredientesReceta", posicionReceta.Ingredientes)
+                            infoRecetaIntent.putExtra("preparacionReceta", posicionReceta.Preparacion)
+                            startActivity(infoRecetaIntent)
                         }
                     }
                 }

@@ -10,5 +10,6 @@ data class ListaRecetas(
     val Nombre: String,
     val Categoria: String,
     val Ingredientes: String,
-    val Preparacion: String
+    val Preparacion: String,
+    val Imagenes: List<String>
 )
