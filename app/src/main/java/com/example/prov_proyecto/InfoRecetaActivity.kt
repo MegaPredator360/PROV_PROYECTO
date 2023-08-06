@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.example.prov_proyecto.databinding.ActivityInfoRecetaBinding
+import com.google.android.material.tabs.TabLayoutMediator
 
 private lateinit var binding: ActivityInfoRecetaBinding
 
@@ -30,6 +31,10 @@ class InfoRecetaActivity : AppCompatActivity() {
         binding.viewPagerImages.adapter = intent.getStringArrayListExtra("imagenesReceta")
             ?.let { ImagePagerAdapt(it) }
 
+        // Se vincula el TabLayout con el ViewPager
+        TabLayoutMediator(binding.tabLayout, binding.viewPagerImages) { tab, position -> }.attach()
+
+        // Se asigna el texto a los botones
         binding.lblinfoNombre.setText(intent.getStringExtra("nombreReceta"))
         binding.lblinfoCategoria.setText(intent.getStringExtra("categoriaReceta"))
         binding.lblinfoIngredientes.setText(intent.getStringExtra("ingredientesReceta"))

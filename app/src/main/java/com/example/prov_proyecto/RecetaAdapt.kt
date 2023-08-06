@@ -5,13 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 class RecetaAdapt(
-    private val context: Activity, private val list: List<ListaRecetas>): ArrayAdapter<ListaRecetas>(context, R.layout.list_item, list) {
+    private val context: Activity, private val list: List<ListaRecetas>): ArrayAdapter<ListaRecetas>(context, R.layout.list_item, list), Filterable {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val inflater: LayoutInflater = LayoutInflater.from(context)
@@ -25,7 +27,7 @@ class RecetaAdapt(
         val urlImagen = list[position].Imagenes[0]
 
         nombreReceta.setText(list[position].Nombre)
-        categoriaReceta.setText("Categoria: " + list[position].Categoria)
+        categoriaReceta.setText(list[position].Categoria)
 
         Glide.with(context)
             .load(urlImagen)

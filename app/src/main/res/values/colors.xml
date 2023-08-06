@@ -2,4 +2,14 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Colores Light Mode -->
+    <color name="colorPrimary">#BC6203</color>
+    <color name="colorSecondary">#673B0D</color>
+    <color name="colorAccent">#FFFFFF</color>
+
+    <!-- Colores Dark Mode -->
+    <color name="colorPrimaryNight">#352311</color>
+    <color name="colorSecondaryNight">#50351A</color>
+    <color name="colorAccentNight">#323232</color>
 </resources>

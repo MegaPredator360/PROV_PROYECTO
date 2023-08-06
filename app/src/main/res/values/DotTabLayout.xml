@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="DotTabLayout" parent="Widget.Design.TabLayout">
+        <!-- Set the ripple color to transparent to remove the hover effect -->
+        <item name="tabRippleColor">@android:color/transparent</item>
+        <!-- Set the indicator color to transparent to remove the select effect -->
+        <item name="tabIndicatorColor">@android:color/transparent</item>
+    </style>
+</resources>

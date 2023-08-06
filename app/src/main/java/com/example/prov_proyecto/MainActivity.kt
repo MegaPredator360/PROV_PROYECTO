@@ -2,11 +2,17 @@ package com.example.prov_proyecto
 
 import android.content.ContentValues.TAG
 import android.content.Intent
+import android.graphics.PorterDuff
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.example.prov_proyecto.databinding.ActivityMainBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -19,6 +25,7 @@ private lateinit var binding: ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private val baseUrl = "https://megapredator360.github.io/API_PRUEBA/"
+    private val opcionesFiltrar = listOf("Mostrar Todos", "Entrada", "Plato Fuerte", "Postre", "Bebidas")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,24 +34,6 @@ class MainActivity : AppCompatActivity() {
 
         // Se llama al metodo para cargar las recetas
         cargarRecetas()
-        /*
-        Aplicación de recetas
-        - Que muestre una coleccion de recetas
-        - Ordenar las recetas por categoria
-        - Poder guardar las recetas en una lista de favoritos
-        - Mostrar procedimientos de recetas con algunas imagenes
-
-        Primer pantalla
-        Muestra la lista de recetas
-        Filtrar recetas por categorias como lista desplegable
-
-        Pantalla info de recetas
-         */
-
-        /* PRUEBA 2
-        * */
-
-        // Prueba 2
     }
 
     private fun cargarRecetas() {
@@ -63,7 +52,7 @@ class MainActivity : AppCompatActivity() {
 
         // Llamamos a la funcion de getRecetas de la interface y que queremos datos de tipo RecetasResponse
         // que serán llenados con la respuesta del API
-        api.getRecetas(url).enqueue(object: Callback<RecetasResponse> {
+        api.getRecetas(url).enqueue(object : Callback<RecetasResponse> {
 
             // Si la respuesta del API es satisfactoria, se llama a la clase RecetasResponse para
             // llenar los datos de la respuesta del API
@@ -72,28 +61,57 @@ class MainActivity : AppCompatActivity() {
                 response: Response<RecetasResponse>
             ) {
                 if (response.isSuccessful) {
-                    response.body()?.let {recetasResponse ->
-                        // Se crea un adaptador para las lista de recetas y mostrarlas en el ListView
-                        val adaptadorListaRecetas = RecetaAdapt(this@MainActivity, recetasResponse.ListaRecetas)
+                    response.body()?.let { recetasResponse ->
 
-                        // Se llama al ListView y se le asignan los datos que recibimos del API
-                        binding.lstRecetas.isClickable = true
-                        binding.lstRecetas.adapter = adaptadorListaRecetas
-                        binding.lstRecetas.setOnItemClickListener { parent, view, position, id ->
-                            val infoRecetaIntent = Intent(this@MainActivity, InfoRecetaActivity::class.java)
+                        val spinnerAdapter = ArrayAdapter(this@MainActivity, android.R.layout.simple_spinner_item, opcionesFiltrar)
+                        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        binding.filtrarCategorias.adapter = spinnerAdapter
 
-                            // Obtenemos la posicion de la receta en la lista
-                            val posicionReceta = recetasResponse.ListaRecetas[position]
+                        binding.filtrarCategorias.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                                // Get the selected filter option
+                                val selectedOption = opcionesFiltrar[position]
 
-                            // Convertimos la lista de imagenes de un List<> a un ArrayList<>
-                            val listaImagenes: ArrayList<String> = posicionReceta.Imagenes.toList() as ArrayList<String>
+                                // Apply the filter and update the ListView
+                                val listaFiltrada = if (selectedOption == "Mostrar Todos") {
+                                    recetasResponse.ListaRecetas
+                                } else {
+                                    recetasResponse.ListaRecetas.filter { item -> item.Categoria.contains(selectedOption) } // Filter based on some condition
+                                }
 
-                            infoRecetaIntent.putExtra("nombreReceta", posicionReceta.Nombre)
-                            infoRecetaIntent.putExtra("categoriaReceta", posicionReceta.Categoria)
-                            infoRecetaIntent.putExtra("ingredientesReceta", posicionReceta.Ingredientes)
-                            infoRecetaIntent.putExtra("preparacionReceta", posicionReceta.Preparacion)
-                            infoRecetaIntent.putStringArrayListExtra("imagenesReceta", listaImagenes)
-                            startActivity(infoRecetaIntent)
+                                val adaptadorListaRecetas =
+                                    RecetaAdapt(this@MainActivity, listaFiltrada)
+                                binding.lstRecetas.isClickable = true
+                                binding.lstRecetas.adapter = adaptadorListaRecetas
+
+                                binding.lstRecetas.setOnItemClickListener { parent, view, position, id ->
+                                    val infoRecetaIntent =
+                                        Intent(this@MainActivity, InfoRecetaActivity::class.java)
+
+                                    // Obtenemos la posicion de la receta en la lista
+                                    val posicionReceta = listaFiltrada[position]
+
+                                    infoRecetaIntent.putExtra("nombreReceta", posicionReceta.Nombre)
+                                    infoRecetaIntent.putExtra("categoriaReceta", posicionReceta.Categoria)
+                                    infoRecetaIntent.putExtra(
+                                        "ingredientesReceta",
+                                        posicionReceta.Ingredientes
+                                    )
+                                    infoRecetaIntent.putExtra(
+                                        "preparacionReceta",
+                                        posicionReceta.Preparacion
+                                    )
+                                    infoRecetaIntent.putStringArrayListExtra(
+                                        "imagenesReceta",
+                                        posicionReceta.Imagenes
+                                    )
+                                    startActivity(infoRecetaIntent)
+                                }
+                            }
+
+                            override fun onNothingSelected(parent: AdapterView<*>?) {
+                                TODO("Not yet implemented")
+                            }
                         }
                     }
                 }
@@ -102,7 +120,11 @@ class MainActivity : AppCompatActivity() {
             // En caso de que ocurra un fallo de respuesta, el usuario recibira un mensaje en su pantalla
             // diciendo que hubo un error y se imprimirá en el Logcat el tipo de error
             override fun onFailure(call: Call<RecetasResponse>, t: Throwable) {
-                Toast.makeText(applicationContext, "Hubo un error al obtener los datos, por favor intenta más tarde", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    applicationContext,
+                    "Hubo un error al obtener los datos, por favor intenta más tarde",
+                    Toast.LENGTH_SHORT
+                ).show()
                 // Mostrará en el Logcat el error
                 Log.i(TAG, "onFailure: ${t.message}")
             }

@@ -15,7 +15,17 @@
         android:theme="?attr/actionBarTheme"
         app:title="Lista de Recetas"
         app:titleTextColor="@color/white"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints" >
+
+        <Spinner
+            android:id="@+id/filtrarCategorias"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:textSize="16sp"
+            android:layout_gravity="end" />
+
+    </androidx.appcompat.widget.Toolbar>
 
     <ListView
         android:id="@+id/lstRecetas"
