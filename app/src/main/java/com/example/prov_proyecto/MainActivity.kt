@@ -85,10 +85,14 @@ class MainActivity : AppCompatActivity() {
                             // Obtenemos la posicion de la receta en la lista
                             val posicionReceta = recetasResponse.ListaRecetas[position]
 
+                            // Convertimos la lista de imagenes de un List<> a un ArrayList<>
+                            val listaImagenes: ArrayList<String> = posicionReceta.Imagenes.toList() as ArrayList<String>
+
                             infoRecetaIntent.putExtra("nombreReceta", posicionReceta.Nombre)
                             infoRecetaIntent.putExtra("categoriaReceta", posicionReceta.Categoria)
                             infoRecetaIntent.putExtra("ingredientesReceta", posicionReceta.Ingredientes)
                             infoRecetaIntent.putExtra("preparacionReceta", posicionReceta.Preparacion)
+                            infoRecetaIntent.putStringArrayListExtra("imagenesReceta", listaImagenes)
                             startActivity(infoRecetaIntent)
                         }
                     }

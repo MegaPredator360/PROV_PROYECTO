@@ -4,11 +4,13 @@ import android.graphics.PorterDuff
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.content.ContextCompat
+import androidx.viewpager2.widget.ViewPager2
 import com.example.prov_proyecto.databinding.ActivityInfoRecetaBinding
 
 private lateinit var binding: ActivityInfoRecetaBinding
 
 class InfoRecetaActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityInfoRecetaBinding.inflate(layoutInflater)
@@ -24,6 +26,9 @@ class InfoRecetaActivity : AppCompatActivity() {
         val upArrow = ContextCompat.getDrawable(this, R.drawable.baseline_arrow_back_24)
         upArrow?.setColorFilter(resources.getColor(R.color.white), PorterDuff.Mode.SRC_ATOP)
         supportActionBar?.setHomeAsUpIndicator(upArrow)
+
+        binding.viewPagerImages.adapter = intent.getStringArrayListExtra("imagenesReceta")
+            ?.let { ImagePagerAdapt(it) }
 
         binding.lblinfoNombre.setText(intent.getStringExtra("nombreReceta"))
         binding.lblinfoCategoria.setText(intent.getStringExtra("categoriaReceta"))
