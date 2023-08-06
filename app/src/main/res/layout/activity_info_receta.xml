@@ -17,101 +17,116 @@
         app:titleTextColor="@color/white"
         tools:ignore="MissingConstraints" />
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPagerImages"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="280dp"
-        app:layout_constraintTop_toBottomOf="@id/infoRecetaToolbar"/>
+        android:layout_height="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        app:layout_constraintTop_toBottomOf="@id/infoRecetaToolbar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/viewPagerImages">
-
-        <LinearLayout
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPagerImages"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:orientation="vertical">
+            android:layout_height="280dp" />
 
-            <TextView
-                android:id="@+id/lblinfoNombreReceta"
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/viewPagerImages">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nombre de la Receta:"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                />
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/lblinfoNombre"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                app:layout_constraintTop_toBottomOf="@id/lblinfoNombreReceta"
-                />
+                <TextView
+                    android:id="@+id/lblinfoNombreReceta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nombre de la Receta:"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    />
 
-            <TextView
-                android:id="@+id/lblinfoCategoriaReceta"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Categoria:"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginTop="15dp"
-                app:layout_constraintTop_toBottomOf="@id/lblinfoNombre"
-                />
+                <TextView
+                    android:id="@+id/lblinfoNombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    app:layout_constraintTop_toBottomOf="@id/lblinfoNombreReceta"
+                    />
 
-            <TextView
-                android:id="@+id/lblinfoCategoria"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                app:layout_constraintTop_toBottomOf="@id/lblinfoCategoriaReceta"
-                />
+                <TextView
+                    android:id="@+id/lblinfoCategoriaReceta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Categoria:"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="15dp"
+                    app:layout_constraintTop_toBottomOf="@id/lblinfoNombre"
+                    />
 
-            <TextView
-                android:id="@+id/lblinfoIngredientesReceta"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Lista de Ingredientes:"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginTop="15dp"
-                app:layout_constraintTop_toBottomOf="@id/lblinfoCategoria"
-                />
+                <TextView
+                    android:id="@+id/lblinfoCategoria"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    app:layout_constraintTop_toBottomOf="@id/lblinfoCategoriaReceta"
+                    />
 
-            <TextView
-                android:id="@+id/lblinfoIngredientes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                app:layout_constraintTop_toBottomOf="@id/lblinfoIngredientesReceta"
-                />
+                <TextView
+                    android:id="@+id/lblinfoIngredientesReceta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Lista de Ingredientes:"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="15dp"
+                    app:layout_constraintTop_toBottomOf="@id/lblinfoCategoria"
+                    />
 
-            <TextView
-                android:id="@+id/lblinfoPreparacionReceta"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Preparación de la Receta:"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginTop="15dp"
-                app:layout_constraintTop_toBottomOf="@id/lblinfoIngredientes"
-                />
+                <TextView
+                    android:id="@+id/lblinfoIngredientes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    app:layout_constraintTop_toBottomOf="@id/lblinfoIngredientesReceta"
+                    />
 
-            <TextView
-                android:id="@+id/lblinfoPreparacion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                app:layout_constraintTop_toBottomOf="@id/lblinfoPreparacionReceta"
-                />
+                <TextView
+                    android:id="@+id/lblinfoPreparacionReceta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Preparación de la Receta:"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="15dp"
+                    app:layout_constraintTop_toBottomOf="@id/lblinfoIngredientes"
+                    />
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/lblinfoPreparacion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    app:layout_constraintTop_toBottomOf="@id/lblinfoPreparacionReceta"
+                    />
 
-    </ScrollView>
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
